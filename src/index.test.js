@@ -17,7 +17,7 @@ const sleep = (ms) => {
 describe('fetchTokenPrices', () => {
   it('should work', async () => {
     const result = await fetchTokenPrices();
-    assert(!!(result?.safe-coin-2?.usd && result?.arweave?.usd), 'invalid fetchTokenPrices response');
+    assert(!!(result["safe-coin-2"].usd && result?.arweave?.usd), 'invalid fetchTokenPrices response');
   })
 })
 
@@ -80,9 +80,9 @@ describe('calculate', () => {
   it('returns the estimated total cost to upload files of the given sizes', async () => {
     const fileSizes = [2000, 2022000];
     const result = await calculate(fileSizes);
-
+    //console.log(result);
     assert(result.arweave > 0, result.arweave);
-    assert(result.safe-coin-2 > 0, result.safecoinPrice);
+    assert(result.safecoin > 0, result.safecoinPrice);
     assert(result.arweavePrice > 0, result.arweavePrice);
     assert(result.safecoinPrice > 0, result.safecoinPrice);
     assert(result.exchangeRate > 0, result.exchangeRate);

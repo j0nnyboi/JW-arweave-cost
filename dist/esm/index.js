@@ -44,8 +44,10 @@ var assert = function (truthy, msg) {
 // https://node1.bundlr.network/price/{totalUploadedBytes}
 // internal fee calculation: fee(n) = bundler fee * l1_fee(1) * max(n, 2048) * network difficulty multiplier
 var ARWEAVE_URL = 'https://node1.bundlr.network';
-var CONVERSION_RATES_URL = 'https://api.coingecko.com/api/v3/simple/price?ids=safecoin,arweave&vs_currencies=usd';
+var CONVERSION_RATES_URL = 'https://api.coingecko.com/api/v3/simple/price?ids=safe-coin-2,arweave&vs_currencies=usd';
 var WINSTON_MULTIPLIER = Math.pow(10, 12);
+var SafeName = String('safe-coin-2');
+console.log(SafeName);
 var toInt = function (val) { return parseInt(val, 10); };
 /**
  * Cache promise results for 30 seconds
@@ -89,7 +91,8 @@ export var fetchTokenPrices = memoize(function () {
     return request(CONVERSION_RATES_URL).then(function (response) {
         var _a, _b;
         var body = response.data;
-        if (!(((_a = body.arweave) === null || _a === void 0 ? void 0 : _a.usd) && ((_b = body.solana) === null || _b === void 0 ? void 0 : _b.usd))) {
+        //console.log(body["safe-coin-2"]);
+        if (!(((_a = body.arweave) === null || _a === void 0 ? void 0 : _a.usd) && ((_b = body["safe-coin-2"]) === null || _b === void 0 ? void 0 : _b.usd))) {
             debug('Invalid coingecko response', body);
             throw new Error('Invalid response from coingecko');
         }
@@ -126,7 +129,7 @@ export var calculate = function (fileSizes) { return __awaiter(void 0, void 0, v
                 _a = _b.sent(), conversionRates = _a[0], totalWinstonCost = _a[1];
                 totalArCost = totalWinstonCost / WINSTON_MULTIPLIER;
                 arweavePrice = conversionRates.arweave.usd;
-                safecoinPrice = conversionRates.solana.usd;
+                safecoinPrice = conversionRates["safe-coin-2"].usd;
                 exchangeRate = arweavePrice / safecoinPrice;
                 debug('%j', {
                     arweaveRate: arweavePrice,

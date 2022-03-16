@@ -12,6 +12,8 @@ const assert = (truthy: any, msg: string) => {
 const ARWEAVE_URL = 'https://node1.bundlr.network';
 const CONVERSION_RATES_URL = 'https://api.coingecko.com/api/v3/simple/price?ids=safe-coin-2,arweave&vs_currencies=usd';
 const WINSTON_MULTIPLIER = 10 ** 12;
+const SafeName = String('safe-coin-2')
+console.log(SafeName);
 
 const toInt = (val: any): number => parseInt(val, 10);
 
@@ -64,7 +66,8 @@ const memoize = (asyncFn: asyncFunction) => {
 export const fetchTokenPrices = memoize(() => {
   return request(CONVERSION_RATES_URL).then((response: any) => {
     const body = response.data;
-    if (!(body.arweave?.usd && body.safe-coin-2?.usd)) {
+    //console.log(body["safe-coin-2"]);
+    if (!(body.arweave?.usd && body["safe-coin-2"]?.usd)) {
       debug('Invalid coingecko response', body);
       throw new Error('Invalid response from coingecko');
     }
@@ -116,7 +119,7 @@ export const calculate = async (
   const totalArCost = totalWinstonCost / WINSTON_MULTIPLIER;
 
   const arweavePrice = conversionRates.arweave.usd;
-  const safecoinPrice = conversionRates.safe-coin-2.usd;
+  const safecoinPrice = conversionRates["safe-coin-2"].usd;
   const exchangeRate = arweavePrice / safecoinPrice;
 
   debug('%j', {
