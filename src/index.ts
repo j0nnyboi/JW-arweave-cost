@@ -91,7 +91,7 @@ const validate = (fileSizes: number[]): void => {
 
 const kb = (kilobytes: number) => kilobytes * 1024;
 const MINIMUM_WINSTON_FEE = 10000000; // 0.00001 AR
-const AR_FEE_MULTIPLIER = 15 / 100; // 15%
+const AR_FEE_MULTIPLIER = 20 / 100; // 20%
 
 // test this. Then make public. Then pull into arweave cloud fn and metaplex
 export const calculate = async (
